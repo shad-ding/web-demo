@@ -7,28 +7,3 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: admin
-
-configuration:
-  status: WARN
-  appenders:
-    console:
-      name: Console
-      target: SYSTEM_OUT
-      layout:
-        pattern: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
-    rollingFile:
-      name: RollingFile
-      fileName: logs/application.log
-      filePattern: logs/application-%d{yyyy-MM-dd}.log
-      layout:
-        pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
-      policies:
-        - timeBased:
-            interval: 1
-            modulate: true
-  loggers:
-    root:
-      level: debug
-      appenderRefs:
-        - ref: Console
-        - ref: RollingFile
