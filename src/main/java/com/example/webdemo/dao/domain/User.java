@@ -14,39 +14,35 @@
  * limitations under the License.
  */
 
-package com.example.webdemo.pojo;
+package com.example.webdemo.dao.domain;
+
+import com.example.webdemo.constants.Sex;
+import lombok.Data;
+
+import javax.persistence.*;
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
  */
+@Entity
+@Data
+@Table(name = "user")
 public class User {
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uid", nullable = false)
+    private Integer userId;
 
-    private Integer age;
+    @Column(name = "name")
+    private String name = "";
 
-    private Integer money;
+    @Column(name = "age")
+    private Integer age = -1;
 
-    public Integer getMoney() {
-        return money;
-    }
+    @Column(name = "sex")
+    private boolean sex = true;
 
-    public void setMoney(Integer money) {
-        this.money = money;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+    public Sex getSex() {
+        return this.sex? Sex.MALE : Sex.FEMALE;
     }
 }
