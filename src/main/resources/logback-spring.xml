@@ -21,9 +21,39 @@
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <encoder>
-            <pattern>%msg%n</pattern>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        <!--服务名称-->
+                        "appName": "${appName}",
+                        <!--打印时间-->
+                        "time": "%date{yyyy-MM-dd HH:mm:ss.SSS}",
+                        <!--日志级别-->
+                        "level": "%level",
+                        <!--进程ID-->
+                        "pid": "${PID:-}",
+                        <!--线程名-->
+                        "thread": "%thread",
+                        <!--全限定类名-->
+                        "class": "%logger",
+                        <!--类中的哪个方法-->
+                        "method": "%method",
+                        <!--类中的第几行-->
+                        "line": "%line",
+                        <!--日志打印的信息-->
+                        "message": "%message",
+                        <!--堆栈异常信息-->
+                        "statck_trace":"%xEx"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
         </encoder>
+        <!--        <encoder>-->
+        <!--            <pattern>%msg%n</pattern>-->
+        <!--        </encoder>-->
     </appender>
 
     <root level="info">
