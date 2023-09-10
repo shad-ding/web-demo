@@ -18,9 +18,15 @@ package com.example.webdemo.controller;
 
 import com.example.webdemo.dao.domain.User;
 import com.example.webdemo.dao.service.IUserService;
+import com.example.webdemo.service.IBasicService;
+import com.example.webdemo.service.impl.BasicServiceImpl;
+import com.example.webdemo.utils.FTPDownload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
@@ -42,5 +48,22 @@ public class BasicController {
     @ResponseBody
     public User user(@RequestParam(name = "userId") Integer userId) {
         return this.userService.findByUserId(userId);
+    }
+
+//    http://localhost:8080/download
+    @PostMapping("/download")
+    @ResponseBody
+    public String download(@RequestBody Map<String, Object> map) {
+        Object obj = map.get("url");
+        Object obj2 = map.get("download-path");
+        if (!(obj instanceof String) || (obj2 != null && !(obj2 instanceof String)))
+            return "传递参数类型错误";
+        String url = (String) obj;
+        String downloadPath = (String) obj2;
+        boolean success = FTPDownload.downloadFiles(url, downloadPath);
+        if (success)
+            return "下载成功";
+        else
+            return "下载失败";
     }
 }
